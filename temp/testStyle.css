@@ -1,0 +1,27 @@
+#root {
+    color: green;
+    margin-left: 150px;
+    margin-right: 150px;
+  }
+  
+  p {
+    font-style: italic;
+  }
+  
+  /* .code {
+    color: black;
+  } */
+  
+  .episode {
+    display: flex;
+    background-color: lightgrey;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom-width: thick;
+    border-bottom-color: darkslategray;
+  }
+  
+  .pic {
+    margin-right: 50px;
+  }
+  

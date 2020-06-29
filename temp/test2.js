@@ -30,17 +30,22 @@ function makePageForEpisodes(episodeList) {
     let divEp = document.createElement("div");
     divEp.classList.add("episode");
     rootElem.appendChild(divEp);
+    let divImg = document.createElement("div");
+    divEp.appendChild(divImg);
+    divImg.classList.add("pic");
     let img = document.createElement("img");
     img.src = episode.image.medium;
-    divEp.appendChild(img);
-    let name = document.createElement("h3");
+    divImg.appendChild(img);
+    let divCont = document.createElement("div");
+    divEp.appendChild(divCont);
+    let name = document.createElement("h2");
     name.innerText = episode.name;
-    divEp.appendChild(name);
+    divCont.appendChild(name);
     let p = document.createElement("p");
     p.innerHTML = episode.summary;
-    divEp.appendChild(p);
+    divCont.appendChild(p);
     displayNums(episode.season, episode.number);
-    let h4 = document.createElement("h4");
+    let h4 = document.createElement("h5");
     h4.innerHTML = episodeCode;
     name.appendChild(h4);
     let a = document.createElement("a");
@@ -48,7 +53,7 @@ function makePageForEpisodes(episodeList) {
     a.appendChild(link);
     a.title = "watch here";
     a.href = episode.url;
-    divEp.appendChild(a);
+    divCont.appendChild(a);
   });
 }
 
