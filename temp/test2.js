@@ -22,7 +22,7 @@ function displayNums(num1, num2) {
   if (num1 <= 9 && num2 > 9) {
     e = "";
   }
-  episodeCode = `S${s}${num1}E${e}${num2}`;
+  episodeCode = `Season ${s}${num1} Episode ${e}${num2}`;
 }
 
 function makePageForEpisodes(episodeList) {
@@ -45,13 +45,13 @@ function makePageForEpisodes(episodeList) {
     p.innerHTML = episode.summary;
     divCont.appendChild(p);
     displayNums(episode.season, episode.number);
-    let h4 = document.createElement("h5");
-    h4.innerHTML = episodeCode;
-    name.appendChild(h4);
+    let h3 = document.createElement("h3");
+    h3.innerHTML = episodeCode;
+    name.appendChild(h3);
     let a = document.createElement("a");
-    let link = document.createTextNode("watch here");
+    let link = document.createTextNode("watch the episode here");
     a.appendChild(link);
-    a.title = "watch here";
+    //a.title = "watch the episode here";
     a.href = episode.url;
     divCont.appendChild(a);
   });
