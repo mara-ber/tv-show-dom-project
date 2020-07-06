@@ -9,14 +9,22 @@ body {
   margin-right: 150px;
 }
 
+#search {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#display {
+  color: white;
+  margin-left: 20px;
+}
+
 p {
   font-style: italic;
   margin-right: 15px;
 }
 
-/* .code {
-    color: black;
-  } */
 
 .episode {
   display: flex;
@@ -24,11 +32,15 @@ p {
   margin-bottom: 30px;
   padding-bottom: 15px;
   border-radius: 10px;
-  /* border-bottom-width: thick; */
-  /* border-bottom-color: darkslategray; */
 }
 
+
+/* .flexible {
+  display: flex;
+} */
+
 .pic {
+  /* display: flex; */
   align-self: center;
   margin-left: 20px;
   margin-right: 50px;

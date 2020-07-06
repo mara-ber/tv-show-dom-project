@@ -1,12 +1,16 @@
-const rootElem = document.getElementById("root");
+// let searchBox;
+// let allEpisodes;
+// //let rootElem;
 
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-}
+// function setup() {
+//   allEpisodes = getAllEpisodes();
+//   makePageForEpisodes(allEpisodes);
 
-//let episodeCode;
-function displayNums(num1, num2) {
+//   searchBox = document.querySelector("#searchInput");
+//   searchBox.addEventListener("keyup", searchEpisodes);
+// }
+
+function displaySE(num1, num2) {
   let s = "0";
   let e = "0";
   if (num1 > 9 && num2 > 9) {
@@ -23,6 +27,11 @@ function displayNums(num1, num2) {
 }
 
 function makePageForEpisodes(episodeList) {
+  const rootElem = document.getElementById("root");
+  rootElem.textContent = "";
+  // let p = document.querySelector("#display");
+  // console.log(p.value)
+  // p.innerText = "";
 
   episodeList.forEach((episode) => {
     //div for the episode
@@ -38,8 +47,9 @@ function makePageForEpisodes(episodeList) {
     img.src = episode.image.medium;
     divImg.appendChild(img);
 
-    //div for content of the episode: a name, a number of the episode and season, and description
+    //div for content of the episode: a name(h2), a number of the episode and season(h3), and description(p)
     let divCont = document.createElement("div");
+    //divCont.classList.add("flexible")
     divEp.appendChild(divCont);
     let name = document.createElement("h2");
     name.innerText = episode.name;
@@ -47,9 +57,8 @@ function makePageForEpisodes(episodeList) {
     let p = document.createElement("p");
     p.innerHTML = episode.summary;
     divCont.appendChild(p);
-    //displayNums(episode.season, episode.number);
     let h3 = document.createElement("h3");
-    h3.innerHTML = displayNums(episode.season, episode.number);
+    h3.innerHTML = displaySE(episode.season, episode.number);
     name.appendChild(h3);
 
     // the link for the episode
@@ -59,6 +68,24 @@ function makePageForEpisodes(episodeList) {
     a.href = episode.url;
     divCont.appendChild(a);
   });
+}
+
+function searchEpisodes() {
+  console.log(searchBox.value);
+  let filteredEpisodes = allEpisodes.filter((episode) =>
+    episodeMatches(episode, searchBox.value)
+  );
+  let p = document.querySelector("#display");
+  p.innerText = `${filteredEpisodes.length}/${allEpisodes.length} episodes`;
+
+  makePageForEpisodes(filteredEpisodes);
+}
+
+function episodeMatches(ep, searchWord) {
+  return (
+    ep.name.toLowerCase().includes(searchWord.toLowerCase()) ||
+    ep.summary.toLowerCase().includes(searchWord.toLowerCase())
+  );
 }
 
 window.onload = setup;
