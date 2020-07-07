@@ -23,20 +23,22 @@ function displaySE(num1, num2) {
   if (num1 <= 9 && num2 > 9) {
     e = "";
   }
-  return `Season ${s}${num1} Episode ${e}${num2}`;
+  return `S${s}${num1}E${e}${num2}`;
 }
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.textContent = "";
-  // let p = document.querySelector("#display");
-  // console.log(p.value)
-  // p.innerText = "";
 
   episodeList.forEach((episode) => {
     //div for the episode
     let divEp = document.createElement("div");
     divEp.classList.add("episode");
+    // name (or id if needed) for each episode equal sNum+eNum 
+    let innerLink = document.createElement("a");
+    innerLink.name = displaySE(episode.season, episode.number);
+    divEp.appendChild(innerLink);
+    //divEp.setAttribute("name", `${displaySE(episode.season, episode.number)}`);
     rootElem.appendChild(divEp);
 
     //div for the episode's img
@@ -49,7 +51,6 @@ function makePageForEpisodes(episodeList) {
 
     //div for content of the episode: a name(h2), a number of the episode and season(h3), and description(p)
     let divCont = document.createElement("div");
-    //divCont.classList.add("flexible")
     divEp.appendChild(divCont);
     let name = document.createElement("h2");
     name.innerText = episode.name;
@@ -70,8 +71,8 @@ function makePageForEpisodes(episodeList) {
   });
 }
 
+//search on the page
 function searchEpisodes() {
-  console.log(searchBox.value);
   let filteredEpisodes = allEpisodes.filter((episode) =>
     episodeMatches(episode, searchBox.value)
   );
@@ -86,6 +87,27 @@ function episodeMatches(ep, searchWord) {
     ep.name.toLowerCase().includes(searchWord.toLowerCase()) ||
     ep.summary.toLowerCase().includes(searchWord.toLowerCase())
   );
+}
+
+//episodes list for select input
+function createEpisodeList(episodes) {
+  episodes.forEach((episode) => {
+    let option = document.createElement("option");
+    let select = document.querySelector("select");
+    //<a href="#top">
+    // let a = document.createElement("a");
+    // a.href = `#${displaySE(episode.season, episode.number)}`;
+    option.innerHTML = `${displaySE(episode.season, episode.number)} - ${
+      episode.name
+    }`;
+    //option.appendChild(a);
+    select.appendChild(option);
+  });
+}
+
+function selectEp() {
+  let selectedEp = document.querySelector("select").value;
+  console.log(selectedEp);
 }
 
 window.onload = setup;
