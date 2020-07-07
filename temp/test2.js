@@ -55,12 +55,13 @@ function makePageForEpisodes(episodeList) {
     let name = document.createElement("h2");
     name.innerText = episode.name;
     divCont.appendChild(name);
+    let h3 = document.createElement("h3");
+    h3.innerHTML = displaySE(episode.season, episode.number);
+    divCont.appendChild(h3);
     let p = document.createElement("p");
     p.innerHTML = episode.summary;
     divCont.appendChild(p);
-    let h3 = document.createElement("h3");
-    h3.innerHTML = displaySE(episode.season, episode.number);
-    name.appendChild(h3);
+
 
     // the link for the episode
     let a = document.createElement("a");
@@ -91,23 +92,36 @@ function episodeMatches(ep, searchWord) {
 
 //episodes list for select input
 function createEpisodeList(episodes) {
+  let select = document.querySelector("select");
+  let option = document.createElement("option");
+  option.innerText = "all episodes";
+  select.appendChild(option);
   episodes.forEach((episode) => {
     let option = document.createElement("option");
-    let select = document.querySelector("select");
-    //<a href="#top">
-    // let a = document.createElement("a");
-    // a.href = `#${displaySE(episode.season, episode.number)}`;
     option.innerHTML = `${displaySE(episode.season, episode.number)} - ${
       episode.name
-    }`;
-    //option.appendChild(a);
+      }`;
     select.appendChild(option);
   });
+}
+
+function episodeSelected(ep, chosenEp) {
+  let epCode = `${displaySE(ep.season, ep.number)} - ${ep.name}`;
+  return epCode === chosenEp;
 }
 
 function selectEp() {
   let selectedEp = document.querySelector("select").value;
   console.log(selectedEp);
+  if (selectedEp === "all episodes") {
+    makePageForEpisodes(allEpisodes);
+  } else {
+    let filteredEpisode = allEpisodes.filter((episode) =>
+      episodeSelected(episode, selectedEp)
+    );
+
+    makePageForEpisodes(filteredEpisode);
+  };
 }
 
 window.onload = setup;
