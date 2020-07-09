@@ -1,14 +1,39 @@
-// let searchBox;
-// let allEpisodes;
-// //let rootElem;
+let searchBox;
+let allEpisodes;
 
-// function setup() {
-//   allEpisodes = getAllEpisodes();
-//   makePageForEpisodes(allEpisodes);
+fetch("https://api.tvmaze.com/shows/82/episodes")
+  .then(function (result) {
+    return result.json()
+  })
+  //.then(allEpisodes => setup())
+  .then(function (episodes) {
+    allEpisodes = episodes;
+    makePageForEpisodes(episodes);
 
-//   searchBox = document.querySelector("#searchInput");
-//   searchBox.addEventListener("keyup", searchEpisodes);
-// }
+    let searchBox = document.querySelector("#searchInput");
+    searchBox.addEventListener("keyup", searchEpisodes);
+    createEpisodeList(episodes);
+
+    let selectBox = document.getElementById("selectInput");
+    selectBox.addEventListener("click", selectEp)
+  })
+
+
+
+
+//let rootElem;
+
+function setup() {
+  //allEpisodes = getAllEpisodes();
+  makePageForEpisodes(allEpisodes);
+
+  searchBox = document.querySelector("#searchInput");
+  searchBox.addEventListener("keyup", searchEpisodes);
+  createEpisodeList(allEpisodes);
+
+  let selectBox = document.getElementById("selectInput");
+  selectBox.addEventListener("click", selectEp);
+}
 
 function displaySE(num1, num2) {
   let s = "0";
@@ -124,4 +149,4 @@ function selectEp() {
   };
 }
 
-window.onload = setup;
+//window.onload = setup;
