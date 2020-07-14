@@ -1,12 +1,18 @@
 //You can edit ALL of the code here
 
-
-let searchBox;
+let allShows;
 let allEpisodes;
+let searchBox;
+
 
 function setup() {
+  allShows = getAllShows().sort(compare);
+  createShowList(allShows);
+  makePageForShows(allShows);
+
   allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  //makePageForEpisodes(allEpisodes);
+
 
   searchBox = document.querySelector("#searchInput");
   searchBox.value = "";
@@ -35,6 +41,7 @@ function displaySE(num1, num2) {
 }
 
 function makePageForEpisodes(episodeList) {
+  //debugger;
   const rootElem = document.getElementById("root");
   rootElem.textContent = "";
 
@@ -42,11 +49,7 @@ function makePageForEpisodes(episodeList) {
     //div for the episode
     let divEp = document.createElement("div");
     divEp.classList.add("episode");
-    // name (or id if needed) for each episode equal sNum+eNum 
-    let innerLink = document.createElement("a");
-    innerLink.name = displaySE(episode.season, episode.number);
-    divEp.appendChild(innerLink);
-    //divEp.setAttribute("name", `${displaySE(episode.season, episode.number)}`);
+    divEp.id = episode.id;
     rootElem.appendChild(divEp);
 
     //div for the episode's img
@@ -57,7 +60,8 @@ function makePageForEpisodes(episodeList) {
     img.src = episode.image.medium;
     divImg.appendChild(img);
 
-    //div for content of the episode: a name(h2), a number of the episode and season(h3), and description(p)
+    //div for content of the episode: a name(h2), 
+    //a number of the episode and season(h3), and description(p)
     let divCont = document.createElement("div");
     divEp.appendChild(divCont);
     let name = document.createElement("h2");
@@ -98,9 +102,23 @@ function episodeMatches(ep, searchWord) {
   );
 }
 
+// // list of shows in select fiels
+// function createShowList(shows) {
+//   let select = document.getElementById("selectShow");
+//   let option = document.createElement("option");
+//   option.innerText = "all shows";
+//   select.appendChild(option);
+//   //let showsNames = shows.map() 
+//   shows.forEach((show) => {
+//     let option = document.createElement("option");
+//     option.innerHTML = show.name;
+//     select.appendChild(option);
+//   });
+// }
+
 //episodes list for select input
 function createEpisodeList(episodes) {
-  let select = document.querySelector("select");
+  let select = document.getElementById("selectInput");
   let option = document.createElement("option");
   option.innerText = "all episodes";
   select.appendChild(option);
@@ -119,7 +137,7 @@ function episodeSelected(ep, chosenEp) {
 }
 
 function selectEp() {
-  let selectedEp = document.querySelector("select").value;
+  let selectedEp = document.getElementById("selectInput").value;
   console.log(selectedEp);
   if (selectedEp === "all episodes") {
     makePageForEpisodes(allEpisodes);
@@ -127,6 +145,8 @@ function selectEp() {
     let filteredEpisode = allEpisodes.filter((episode) =>
       episodeSelected(episode, selectedEp)
     );
+    // const filteredEpisodeDiv = document.getElementById(filteredEpisode[0].id);
+    // filteredEpisodeDiv.scrollIntoView()
 
     makePageForEpisodes(filteredEpisode);
   };
@@ -135,4 +155,4 @@ function selectEp() {
 window.onload = setup;
 
 
-window.onload = setup;
+
